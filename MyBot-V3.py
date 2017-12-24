@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
 """
+Created on Sat Dec 23 00:29:09 2017
+
+@author: Akashdeep Jassal
+"""
+
+# -*- coding: utf-8 -*-
+"""
 Created on Fri Dec 22 22:54:08 2017
 
 @author: Akashdeep Jassal
@@ -24,9 +31,11 @@ import logging
 
 # GAME START
 # Here we define the bot's name as Settler and initialize the game, including communication with the Halite engine.
-game = hlt.Game("Settler-V2")
+game = hlt.Game("Settler-V3")
 # Then we print our start message to the logs
 logging.info("Starting my Settler bot!")
+
+planets_planned=[]
 
 while True:
     # TURN START
@@ -62,7 +71,10 @@ while True:
                 # This will mean that you have a higher probability of crashing into ships, but it also means you will
                 # make move decisions much quicker. As your skill progresses and your moves turn more optimal you may
                 # wish to turn that option off.
-                navigate_command = ship.navigate(
+                if planet in planets_planned:
+                    continue
+                else:
+                    navigate_command = ship.navigate(
                     ship.closest_point_to(planet),
                     game_map,
                     speed=int(hlt.constants.MAX_SPEED),
@@ -72,6 +84,7 @@ while True:
                 # don't fret though, we can run the command again the next turn)
                 if navigate_command:
                     command_queue.append(navigate_command)
+                    planets_planned.append(planet)
             break
 
     # Send our set of commands to the Halite engine for this turn
