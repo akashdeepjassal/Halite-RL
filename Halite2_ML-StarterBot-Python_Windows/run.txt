@@ -1,0 +1,1 @@
+python -m tsmlstarterbot.train --model_name model_long_training --data data/replays-20170930-sample.zip --games_limit 1000 --steps 5000 --seed 15485863 --minibatch_size 50
